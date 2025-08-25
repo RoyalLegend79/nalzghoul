@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Boimator Dashboard</title>
+  <style>
+    /* Underline slide animation for nav links */
+    nav ul li a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #facc15; /* yellow-400 */
+      transition: width 0.3s ease;
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* Hamburger animation */
+    #menu-btn {
+      position: relative;
+      width: 32px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    #menu-btn span {
+      display: block;
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    #menu-btn.open span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    #menu-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+    #menu-btn.open span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+
+    /* Mobile menu styling */
+    #menu.mobile {
+      position: fixed;
+      top: 56px; /* nav height */
+      right: 0;
+      width: 70%;
+      max-width: 250px;
+      height: calc(100% - 56px);
+      background: #4f46e5; /* indigo-700 */
+      padding-top: 1rem;
+      padding-left: 1rem;
+      box-shadow: -4px 0 8px rgba(0,0,0,0.2);
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    #menu.mobile.show {
+      transform: translateX(0);
+    }
+    #menu.mobile li a {
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      padding-bottom: 8px;
+    }
+    #menu.mobile li a::after {
+      background-color: #facc15;
+    }
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 20;
+      transition: opacity 0.3s ease;
+    }
+    #overlay.show {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-indigo-700 text-white p-4 flex items-center justify-between shadow fixed top-0 left-0 right-0 z-40">
+    <div class="flex items-center space-x-2">
+      <!-- Logo -->
+      <div class="text-2xl font-extrabold tracking-wide select-none">
+        <span class="text-yellow-400">B</span>oimator
+      </div>
+    </div>
+
+    <!-- Menu button for small screens -->
+    <button id="menu-btn" class="md:hidden" aria-label="Toggle menu" aria-expanded="false" aria-controls="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Nav Links (desktop) -->
+    <ul
+      id="menu"
+      class="hidden md:flex space-x-8 font-semibold"
+    >
+      <li><a href="#" class="hover:text-yellow-400 transition">Home</a></li>
+      <li><a href="#" class="hover:text-yellow-400 transition">Projects</a></li>
+      <li><a href="#" class="hover:text-yellow-400 transition">About</a></li>
+      <li><a href="#" class="hover:text-yellow-400 transition">Contact</a></li>
+      <li><a href="#" class="hover:text-yellow-400 transition">Help</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="overlay"></div>
+
+  <!-- Cards Grid -->
+  <main class="p-6 pt-24 flex-grow">
+    <div class="max-w-7xl mx-auto grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+
+      <!-- Card 1 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
+        <img
+          class="h-40 w-full object-cover"
+          src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80"
+          alt="Campus Map"
+        />
+        <div class="p-5 flex flex-col flex-grow">
+          <h3 class="text-indigo-700 font-bold text-lg mb-2">Smart Campus Navigation</h3>
+          <p class="text-gray-700 flex-grow">Find buildings, classrooms, and more on campus with real-time directions.</p>
+          <a href="#" class="mt-4 inline-block bg-indigo-600 text-white py-2 rounded-full text-center hover:bg-indigo-700 transition">
+            Explore Now
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
+        <img
+          class="h-40 w-full object-cover"
+          src="https://images.unsplash.com/photo-1556741533-f6acd647d2fb?auto=format&fit=crop&w=800&q=80"
+          alt="Blockchain"
+        />
+        <div class="p-5 flex flex-col flex-grow">
+          <h3 class="text-indigo-700 font-bold text-lg mb-2">Blockchain Certificate Verification</h3>
+          <p class="text-gray-700 flex-grow">Secure and verify certificates using blockchain technology.</p>
+          <a href="#" class="mt-4 inline-block bg-indigo-600 text-white py-2 rounded-full text-center hover:bg-indigo-700 transition">
+            Learn More
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
+        <img
+          class="h-40 w-full object-cover"
+          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+          alt="E-commerce"
+        />
+        <div class="p-5 flex flex-col flex-grow">
+          <h3 class="text-indigo-700 font-bold text-lg mb-2">Sustainable E-commerce Marketplace</h3>
+          <p class="text-gray-700 flex-grow">Shop eco-friendly products with transparency on sustainability.</p>
+          <a href="#" class="mt-4 inline-block bg-indigo-600 text-white py-2 rounded-full text-center hover:bg-indigo-700 transition">
+            Shop Now
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
+        <img
+          class="h-40 w-full object-cover"
+          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80"
+          alt="AI Healthcare"
+        />
+        <div class="p-5 flex flex-col flex-grow">
+          <h3 class="text-indigo-700 font-bold text-lg mb-2">AI-Powered Health Assistant</h3>
+          <p class="text-gray-700 flex-grow">Personalized AI assistant providing health advice and reminders.</p>
+          <a href="#" class="mt-4 inline-block bg-indigo-600 text-white py-2 rounded-full text-center hover:bg-indigo-700 transition">
+            Discover
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
+        <img
+          class="h-40 w-full object-cover"
+          src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80"
+          alt="IoT Home Automation"
+        />
+        <div class="p-5 flex flex-col flex-grow">
+          <h3 class="text-indigo-700 font-bold text-lg mb-2">Smart Home Automation</h3>
+          <p class="text-gray-700 flex-grow">Automate household tasks with IoT and machine learning.</p>
+          <a href="#" class="mt-4 inline-block bg-indigo-600 text-white py-2 rounded-full text-center hover:bg-indigo-700 transition">
+            Get Started
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="overlay"></div>
+
+  <script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    const overlay = document.getElementById('overlay');
+
+    function closeMenu() {
+      btn.classList.remove('open');
+      menu.classList.remove('show');
+      overlay.classList.remove('show');
+      setTimeout(() => menu.classList.remove('mobile'), 300);
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    function openMenu() {
+      menu.classList.add('mobile');
+      setTimeout(() => menu.classList.add('show'), 10);
+      overlay.classList.add('show');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+
+    btn.addEventListener('click', () => {
+      if (menu.classList.contains('mobile')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    overlay.addEventListener('click', closeMenu);
+
+    // Hide/show menu button explicitly on resize (optional, for extra safety)
+    function checkMenuBtnVisibility() {
+      if (window.innerWidth >= 768) {
+        btn.style.display = 'none';
+        // Also close menu if open
+        if (menu.classList.contains('mobile')) {
+          closeMenu();
+        }
+      } else {
+        btn.style.display = 'flex';
+      }
+    }
+
+    checkMenuBtnVisibility();
+    window.addEventListener('resize', checkMenuBtnVisibility);
+  </script>
+
+</body>
+</html>
